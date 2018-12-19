@@ -6,17 +6,10 @@ var co;
         (function (laya) {
             var gesture;
             (function (gesture_1) {
-                var Gesture = /** @class */ (function () {
-                    function Gesture() {
-                    }
-                    Gesture.LONG_CLICK = "co.lujun.laya.gesture.Gesture.long_click";
-                    return Gesture;
-                }());
-                gesture_1.Gesture = Gesture;
                 var LayaGestureManager = /** @class */ (function () {
                     function LayaGestureManager() {
-                        this.mSpriteSubscriber = {};
-                        this.registerEvent();
+                        this.mEventInjector = {};
+                        this.mSpriteCache = {};
                     }
                     LayaGestureManager.getInstance = function () {
                         if (LayaGestureManager.sInstance == null) {
@@ -24,41 +17,42 @@ var co;
                         }
                         return LayaGestureManager.sInstance;
                     };
-                    LayaGestureManager.prototype.onGestureEvent = function (gesture, sprite) {
-                        this.mSpriteSubscriber[gesture].push(sprite);
-                    };
-                    LayaGestureManager.prototype.offGestureEvent = function (gesture, sprite) {
-                        var idx = this.mSpriteSubscriber[gesture].indexOf(sprite);
+                    LayaGestureManager.prototype.onGestureEvent = function (sprite, gesture, caller, listener) {
+                        if (this.mEventInjector[gesture] == undefined || this.mEventInjector[gesture] == null) {
+                            this.mEventInjector[gesture] = [];
+                        }
+                        if (this.mSpriteCache[gesture] == undefined || this.mSpriteCache[gesture] == null) {
+                            this.mSpriteCache[gesture] = [];
+                        }
+                        var eventInjector;
+                        switch (gesture) {
+                            case gesture_1.Gesture.LONG_CLICK:
+                                eventInjector = new gesture_1.LongClickEventInjector(gesture, sprite, caller, listener);
+                                break;
+                        }
+                        if (eventInjector == undefined || eventInjector == null) {
+                            throw "Can not find correct EventInjector!";
+                        }
+                        var idx = this.mSpriteCache[gesture].indexOf(sprite);
                         if (idx > -1) {
-                            this.mSpriteSubscriber[gesture].splice(idx, 1);
+                            this.mEventInjector[gesture][idx] = eventInjector;
+                            this.mSpriteCache[gesture][idx] = sprite;
+                        }
+                        else {
+                            this.mEventInjector[gesture].push(eventInjector);
+                            this.mSpriteCache[gesture].push(sprite);
                         }
                     };
-                    LayaGestureManager.prototype.registerEvent = function () {
-                        Laya.stage.on(Laya.Event.MOUSE_DOWN, this, this.onMouseDown);
-                        Laya.stage.on(Laya.Event.MOUSE_MOVE, this, this.onMouseMove);
-                        Laya.stage.on(Laya.Event.MOUSE_UP, this, this.onMouseUp);
-                        Laya.stage.on(Laya.Event.MOUSE_OUT, this, this.onMouseOut);
-                        Laya.stage.on(Laya.Event.MOUSE_OVER, this, this.onMouseOver);
-                        Laya.stage.on(Laya.Event.MOUSE_WHEEL, this, this.onMouseWheel);
-                        Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN, this, this.onRightMouseDown);
-                        Laya.stage.on(Laya.Event.RIGHT_MOUSE_UP, this, this.onRightMouseUp);
-                    };
-                    LayaGestureManager.prototype.onMouseDown = function (e) {
-                        // Laya.stage.event()
-                    };
-                    LayaGestureManager.prototype.onMouseMove = function (e) {
-                    };
-                    LayaGestureManager.prototype.onMouseUp = function (e) {
-                    };
-                    LayaGestureManager.prototype.onMouseOut = function (e) {
-                    };
-                    LayaGestureManager.prototype.onMouseOver = function (e) {
-                    };
-                    LayaGestureManager.prototype.onMouseWheel = function (e) {
-                    };
-                    LayaGestureManager.prototype.onRightMouseDown = function (e) {
-                    };
-                    LayaGestureManager.prototype.onRightMouseUp = function (e) {
+                    LayaGestureManager.prototype.offGestureEvent = function (sprite, gesture) {
+                        var idx = this.mSpriteCache[gesture].indexOf(sprite);
+                        if (idx > -1) {
+                            var eventInjector = this.mEventInjector[gesture].splice(idx, 1);
+                            for (var i = 0; i < eventInjector.length; ++i) {
+                                eventInjector[i].unRegisterEvent();
+                                eventInjector[i] = null;
+                            }
+                            this.mSpriteCache[gesture].splice(idx, 1);
+                        }
                     };
                     return LayaGestureManager;
                 }());

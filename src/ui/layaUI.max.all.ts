@@ -5,7 +5,7 @@ module ui {
     export class GestureViewUI extends View {
 		public testImg:Laya.Image;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"var":"testImg","skin":"comp/image.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":424,"x":275,"var":"testImg","skin":"comp/image.png"}}]};
         constructor(){ super()}
         createChildren():void {
         

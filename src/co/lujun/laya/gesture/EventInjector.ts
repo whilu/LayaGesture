@@ -1,20 +1,15 @@
 
 module co.lujun.laya.gesture{
 
-	export class EventInjector{
+	export abstract class EventInjector{
 		
 		private _sprite: Laya.Sprite;
-		private _gesture: string;
 
-		private _mouseDown: boolean = false;
+		protected _gesture: string;
+		protected _caller: any;
+		protected _listener: (p1?: any, p2?: any, p3?: any, p4?: any) => void;
 
-		private _lastMouseDownTime: number;
-		private _longClickDurationTime: number = 2000;
-
-		private _caller: any;
-		private _listener: (p1?: any, p2?: any, p3?: any, p4?: any) => {};
-
-		constructor(gesture: string, sprite: Laya.Sprite, caller: any, listener: (p1?: any, p2?: any, p3?: any, p4?: any) => {}){
+		constructor(gesture: string, sprite: Laya.Sprite, caller: any, listener: (p1?: any, p2?: any, p3?: any, p4?: any) => void){
 			this._gesture = gesture;
 			this._sprite = sprite;
 			this._caller = caller;
@@ -33,47 +28,31 @@ module co.lujun.laya.gesture{
 			this._sprite.on(Laya.Event.RIGHT_MOUSE_UP, this, this.onRightMouseUp);
 		}
 
-		private invokeMouseLongClick(){
-			if(new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime){
-				return;
-			}
-			
-			this._listener.call(this._caller, []);
+		public unRegisterEvent(){
+			this._sprite.off(Laya.Event.MOUSE_DOWN, this, this.onMouseDown);
+			this._sprite.off(Laya.Event.MOUSE_MOVE, this, this.onMouseMove);
+			this._sprite.off(Laya.Event.MOUSE_UP, this, this.onMouseUp);
+			this._sprite.off(Laya.Event.MOUSE_OUT, this, this.onMouseOut);
+			this._sprite.off(Laya.Event.MOUSE_OVER, this, this.onMouseOver);
+			this._sprite.off(Laya.Event.MOUSE_WHEEL, this, this.onMouseWheel);
+			this._sprite.off(Laya.Event.RIGHT_MOUSE_DOWN, this, this.onRightMouseDown);
+			this._sprite.off(Laya.Event.RIGHT_MOUSE_UP, this, this.onRightMouseUp);
 		}
 
-		private onMouseDown(e: Event){
-			this._mouseDown = true;
-			this._lastMouseDownTime = new Date().getTime();
-		}
+		abstract onMouseDown(e: Event): any;
 
-		private onMouseMove(e: Event){
+		abstract onMouseMove(e: Event): any;
 
-		}
+		abstract onMouseUp(e: Event): any;
 
-		private onMouseUp(e: Event){
-			this._mouseDown = false;
+		abstract onMouseOut(e: Event): any;
 
-			this.invokeMouseLongClick();
-		}
+		abstract onMouseOver(e: Event): any;
 
-		private onMouseOut(e: Event){
-			this._mouseDown = false;
-		}
+		abstract onMouseWheel(e: Event): any;
 
-		private onMouseOver(e: Event){
+		abstract onRightMouseDown(e: Event): any;
 
-		}
-
-		private onMouseWheel(e: Event){
-
-		}
-
-		private onRightMouseDown(e: Event){
-
-		}
-
-		private onRightMouseUp(e: Event){
-
-		}
+		abstract onRightMouseUp(e: Event): any;
 	}
 }

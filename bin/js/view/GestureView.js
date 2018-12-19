@@ -11,14 +11,19 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var co = .lujun.laya.gesture;
 var view;
 (function (view) {
     var GestureView = /** @class */ (function (_super) {
         __extends(GestureView, _super);
         function GestureView() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.LONG_CLICK, _this, _this.longClick);
+            return _this;
         }
+        GestureView.prototype.longClick = function () {
+            console.log("long click");
+            LayaGestureManager.getInstance().offGestureEvent(this.testImg, Gesture.LONG_CLICK);
+        };
         return GestureView;
     }(ui.GestureViewUI));
     view.GestureView = GestureView;

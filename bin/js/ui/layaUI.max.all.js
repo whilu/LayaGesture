@@ -24,7 +24,7 @@ var ui;
             _super.prototype.createChildren.call(this);
             this.createView(ui.GestureViewUI.uiView);
         };
-        GestureViewUI.uiView = { "type": "View", "props": { "width": 750, "height": 1334 }, "child": [{ "type": "Image", "props": { "var": "testImg", "skin": "comp/image.png" } }] };
+        GestureViewUI.uiView = { "type": "View", "props": { "width": 750, "height": 1334 }, "child": [{ "type": "Image", "props": { "y": 424, "x": 275, "var": "testImg", "skin": "comp/image.png" } }] };
         return GestureViewUI;
     }(View));
     ui.GestureViewUI = GestureViewUI;
