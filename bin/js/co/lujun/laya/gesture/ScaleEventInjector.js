@@ -32,33 +32,35 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var view;
-(function (view) {
-    var GestureView = /** @class */ (function (_super) {
-        __extends(GestureView, _super);
-        function GestureView() {
-            var _this = _super.call(this) || this;
-            _this.restoreBtn.on(Laya.Event.CLICK, _this, _this.restore);
-            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.LONG_CLICK, _this, _this.longClick);
-            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.DRAG, _this, _this.mouseDrag);
-            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.DOWN, _this, _this.mouseDown);
-            return _this;
-        }
-        GestureView.prototype.longClick = function () {
-            console.log("mouse long click");
-            LayaGestureManager.getInstance().offGestureEvent(this.testImg, Gesture.LONG_CLICK);
-        };
-        GestureView.prototype.mouseDrag = function (mouseSpriteX, mouseSpriteY) {
-            this.testImg.pos(Laya.stage.mouseX - mouseSpriteX, Laya.stage.mouseY - mouseSpriteY);
-        };
-        GestureView.prototype.mouseDown = function (x, y) {
-            console.log("mouse down x = " + x + ", y = " + y);
-        };
-        GestureView.prototype.restore = function () {
-            this.testImg.pos(310, 500);
-        };
-        return GestureView;
-    }(ui.GestureViewUI));
-    view.GestureView = GestureView;
-})(view || (view = {}));
-//# sourceMappingURL=GestureView.js.map
+var co;
+(function (co) {
+    var lujun;
+    (function (lujun) {
+        var laya;
+        (function (laya) {
+            var gesture;
+            (function (gesture) {
+                var ScaleEventInjector = /** @class */ (function (_super) {
+                    __extends(ScaleEventInjector, _super);
+                    function ScaleEventInjector() {
+                        return _super !== null && _super.apply(this, arguments) || this;
+                    }
+                    ScaleEventInjector.prototype.invokeMouseScale = function (scaleX, scaleY, rotation) {
+                        this._listener.call(this._caller, scaleX, scaleY, rotation);
+                    };
+                    ScaleEventInjector.prototype.onMouseDown = function (e) { };
+                    ScaleEventInjector.prototype.onMouseMove = function (e) { };
+                    ScaleEventInjector.prototype.onMouseUp = function (e) { };
+                    ScaleEventInjector.prototype.onMouseOut = function (e) { };
+                    ScaleEventInjector.prototype.onMouseOver = function (e) { };
+                    ScaleEventInjector.prototype.onMouseWheel = function (e) { };
+                    ScaleEventInjector.prototype.onRightMouseDown = function (e) { };
+                    ScaleEventInjector.prototype.onRightMouseUp = function (e) { };
+                    return ScaleEventInjector;
+                }(gesture.EventInjector));
+                gesture.ScaleEventInjector = ScaleEventInjector;
+            })(gesture = laya.gesture || (laya.gesture = {}));
+        })(laya = lujun.laya || (lujun.laya = {}));
+    })(lujun = co.lujun || (co.lujun = {}));
+})(co || (co = {}));
+//# sourceMappingURL=ScaleEventInjector.js.map

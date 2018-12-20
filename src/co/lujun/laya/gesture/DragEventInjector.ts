@@ -21,31 +21,36 @@
  */
 
 module co.lujun.laya.gesture{
+	
+	export class DragEventInjector extends EventInjector{
 
-	export class LongClickEventInjector extends EventInjector{
+		private _mouseDown: boolean;
+		private _mouseDownX: number;
+		private _mouseDownY: number;
 
-		private _lastMouseDownTime: number;
-		private _longClickDurationTime: number = 1000;
-
-		private invokeMouseLongClick(): void{
-			if(new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime){
-				return;
-			}
-			
-			this._listener.call(this._caller, []);
+		private invokeMouseDrag(mouseSpriteX: number, mouseSpriteY: number): void{
+			this._listener.call(this._caller, mouseSpriteX, mouseSpriteY);
 		}
 
 		onMouseDown(e: Event): void{
-			this._lastMouseDownTime = new Date().getTime();
+			this._mouseDown = true;
+			this._mouseDownX = this._sprite.mouseX;
+			this._mouseDownY = this._sprite.mouseY;
 		}
 
-		onMouseMove(e: Event): void{}
+		onMouseMove(e: Event): void{
+			if(this._mouseDown){
+				this.invokeMouseDrag(this._mouseDownX - this._sprite.pivotX, this._mouseDownY - this._sprite.pivotY);
+			}
+		}
 
 		onMouseUp(e: Event): void{
-			this.invokeMouseLongClick();
+			this._mouseDown = false;
 		}
 
-		onMouseOut(e: Event): void{}
+		onMouseOut(e: Event): void{
+			this._mouseDown = false;
+		}
 
 		onMouseOver(e: Event): void{}
 

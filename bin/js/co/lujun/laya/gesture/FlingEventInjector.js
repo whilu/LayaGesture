@@ -40,36 +40,27 @@ var co;
         (function (laya) {
             var gesture;
             (function (gesture) {
-                var LongClickEventInjector = /** @class */ (function (_super) {
-                    __extends(LongClickEventInjector, _super);
-                    function LongClickEventInjector() {
-                        var _this = _super !== null && _super.apply(this, arguments) || this;
-                        _this._longClickDurationTime = 1000;
-                        return _this;
+                var FlingEventInjector = /** @class */ (function (_super) {
+                    __extends(FlingEventInjector, _super);
+                    function FlingEventInjector() {
+                        return _super !== null && _super.apply(this, arguments) || this;
                     }
-                    LongClickEventInjector.prototype.invokeMouseLongClick = function () {
-                        if (new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime) {
-                            return;
-                        }
-                        this._listener.call(this._caller, []);
+                    FlingEventInjector.prototype.invokeMouseFling = function (speedX, speedY, mouseDownPoint, mouseUpPoint) {
+                        this._listener.call(this._caller, speedX, speedY, mouseDownPoint, mouseUpPoint);
                     };
-                    LongClickEventInjector.prototype.onMouseDown = function (e) {
-                        this._lastMouseDownTime = new Date().getTime();
-                    };
-                    LongClickEventInjector.prototype.onMouseMove = function (e) { };
-                    LongClickEventInjector.prototype.onMouseUp = function (e) {
-                        this.invokeMouseLongClick();
-                    };
-                    LongClickEventInjector.prototype.onMouseOut = function (e) { };
-                    LongClickEventInjector.prototype.onMouseOver = function (e) { };
-                    LongClickEventInjector.prototype.onMouseWheel = function (e) { };
-                    LongClickEventInjector.prototype.onRightMouseDown = function (e) { };
-                    LongClickEventInjector.prototype.onRightMouseUp = function (e) { };
-                    return LongClickEventInjector;
+                    FlingEventInjector.prototype.onMouseDown = function (e) { };
+                    FlingEventInjector.prototype.onMouseMove = function (e) { };
+                    FlingEventInjector.prototype.onMouseUp = function (e) { };
+                    FlingEventInjector.prototype.onMouseOut = function (e) { };
+                    FlingEventInjector.prototype.onMouseOver = function (e) { };
+                    FlingEventInjector.prototype.onMouseWheel = function (e) { };
+                    FlingEventInjector.prototype.onRightMouseDown = function (e) { };
+                    FlingEventInjector.prototype.onRightMouseUp = function (e) { };
+                    return FlingEventInjector;
                 }(gesture.EventInjector));
-                gesture.LongClickEventInjector = LongClickEventInjector;
+                gesture.FlingEventInjector = FlingEventInjector;
             })(gesture = laya.gesture || (laya.gesture = {}));
         })(laya = lujun.laya || (lujun.laya = {}));
     })(lujun = co.lujun || (co.lujun = {}));
 })(co || (co = {}));
-//# sourceMappingURL=LongClickEventInjector.js.map
+//# sourceMappingURL=FlingEventInjector.js.map

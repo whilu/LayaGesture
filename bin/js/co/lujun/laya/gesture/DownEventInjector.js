@@ -40,36 +40,29 @@ var co;
         (function (laya) {
             var gesture;
             (function (gesture) {
-                var LongClickEventInjector = /** @class */ (function (_super) {
-                    __extends(LongClickEventInjector, _super);
-                    function LongClickEventInjector() {
-                        var _this = _super !== null && _super.apply(this, arguments) || this;
-                        _this._longClickDurationTime = 1000;
-                        return _this;
+                var DownEventInjector = /** @class */ (function (_super) {
+                    __extends(DownEventInjector, _super);
+                    function DownEventInjector() {
+                        return _super !== null && _super.apply(this, arguments) || this;
                     }
-                    LongClickEventInjector.prototype.invokeMouseLongClick = function () {
-                        if (new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime) {
-                            return;
-                        }
-                        this._listener.call(this._caller, []);
+                    DownEventInjector.prototype.invokeMouseDown = function (x, y) {
+                        this._listener.call(this._caller, x, y);
                     };
-                    LongClickEventInjector.prototype.onMouseDown = function (e) {
-                        this._lastMouseDownTime = new Date().getTime();
+                    DownEventInjector.prototype.onMouseDown = function (e) {
+                        this.invokeMouseDown(this._sprite.mouseX, this._sprite.mouseY);
                     };
-                    LongClickEventInjector.prototype.onMouseMove = function (e) { };
-                    LongClickEventInjector.prototype.onMouseUp = function (e) {
-                        this.invokeMouseLongClick();
-                    };
-                    LongClickEventInjector.prototype.onMouseOut = function (e) { };
-                    LongClickEventInjector.prototype.onMouseOver = function (e) { };
-                    LongClickEventInjector.prototype.onMouseWheel = function (e) { };
-                    LongClickEventInjector.prototype.onRightMouseDown = function (e) { };
-                    LongClickEventInjector.prototype.onRightMouseUp = function (e) { };
-                    return LongClickEventInjector;
+                    DownEventInjector.prototype.onMouseMove = function (e) { };
+                    DownEventInjector.prototype.onMouseUp = function (e) { };
+                    DownEventInjector.prototype.onMouseOut = function (e) { };
+                    DownEventInjector.prototype.onMouseOver = function (e) { };
+                    DownEventInjector.prototype.onMouseWheel = function (e) { };
+                    DownEventInjector.prototype.onRightMouseDown = function (e) { };
+                    DownEventInjector.prototype.onRightMouseUp = function (e) { };
+                    return DownEventInjector;
                 }(gesture.EventInjector));
-                gesture.LongClickEventInjector = LongClickEventInjector;
+                gesture.DownEventInjector = DownEventInjector;
             })(gesture = laya.gesture || (laya.gesture = {}));
         })(laya = lujun.laya || (lujun.laya = {}));
     })(lujun = co.lujun || (co.lujun = {}));
 })(co || (co = {}));
-//# sourceMappingURL=LongClickEventInjector.js.map
+//# sourceMappingURL=DownEventInjector.js.map

@@ -22,28 +22,17 @@
 
 module co.lujun.laya.gesture{
 
-	export class LongClickEventInjector extends EventInjector{
+	export class FlingEventInjector extends EventInjector{
 
-		private _lastMouseDownTime: number;
-		private _longClickDurationTime: number = 1000;
-
-		private invokeMouseLongClick(): void{
-			if(new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime){
-				return;
-			}
-			
-			this._listener.call(this._caller, []);
+		private invokeMouseFling(speedX: number, speedY: number, mouseDownPoint: number, mouseUpPoint: number): void{
+			this._listener.call(this._caller, speedX, speedY, mouseDownPoint, mouseUpPoint);
 		}
 
-		onMouseDown(e: Event): void{
-			this._lastMouseDownTime = new Date().getTime();
-		}
+		onMouseDown(e: Event): void{}
 
 		onMouseMove(e: Event): void{}
 
-		onMouseUp(e: Event): void{
-			this.invokeMouseLongClick();
-		}
+		onMouseUp(e: Event): void{}
 
 		onMouseOut(e: Event): void{}
 
@@ -54,5 +43,8 @@ module co.lujun.laya.gesture{
 		onRightMouseDown(e: Event): void{}
 
 		onRightMouseUp(e: Event): void{}
+	}
+		
+		
 	}
 }

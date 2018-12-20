@@ -40,36 +40,39 @@ var co;
         (function (laya) {
             var gesture;
             (function (gesture) {
-                var LongClickEventInjector = /** @class */ (function (_super) {
-                    __extends(LongClickEventInjector, _super);
-                    function LongClickEventInjector() {
-                        var _this = _super !== null && _super.apply(this, arguments) || this;
-                        _this._longClickDurationTime = 1000;
-                        return _this;
+                var DragEventInjector = /** @class */ (function (_super) {
+                    __extends(DragEventInjector, _super);
+                    function DragEventInjector() {
+                        return _super !== null && _super.apply(this, arguments) || this;
                     }
-                    LongClickEventInjector.prototype.invokeMouseLongClick = function () {
-                        if (new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime) {
-                            return;
+                    DragEventInjector.prototype.invokeMouseDrag = function (mouseSpriteX, mouseSpriteY) {
+                        this._listener.call(this._caller, mouseSpriteX, mouseSpriteY);
+                    };
+                    DragEventInjector.prototype.onMouseDown = function (e) {
+                        this._mouseDown = true;
+                        this._mouseDownX = this._sprite.mouseX;
+                        this._mouseDownY = this._sprite.mouseY;
+                    };
+                    DragEventInjector.prototype.onMouseMove = function (e) {
+                        if (this._mouseDown) {
+                            this.invokeMouseDrag(this._mouseDownX - this._sprite.pivotX, this._mouseDownY - this._sprite.pivotY);
                         }
-                        this._listener.call(this._caller, []);
                     };
-                    LongClickEventInjector.prototype.onMouseDown = function (e) {
-                        this._lastMouseDownTime = new Date().getTime();
+                    DragEventInjector.prototype.onMouseUp = function (e) {
+                        this._mouseDown = false;
                     };
-                    LongClickEventInjector.prototype.onMouseMove = function (e) { };
-                    LongClickEventInjector.prototype.onMouseUp = function (e) {
-                        this.invokeMouseLongClick();
+                    DragEventInjector.prototype.onMouseOut = function (e) {
+                        this._mouseDown = false;
                     };
-                    LongClickEventInjector.prototype.onMouseOut = function (e) { };
-                    LongClickEventInjector.prototype.onMouseOver = function (e) { };
-                    LongClickEventInjector.prototype.onMouseWheel = function (e) { };
-                    LongClickEventInjector.prototype.onRightMouseDown = function (e) { };
-                    LongClickEventInjector.prototype.onRightMouseUp = function (e) { };
-                    return LongClickEventInjector;
+                    DragEventInjector.prototype.onMouseOver = function (e) { };
+                    DragEventInjector.prototype.onMouseWheel = function (e) { };
+                    DragEventInjector.prototype.onRightMouseDown = function (e) { };
+                    DragEventInjector.prototype.onRightMouseUp = function (e) { };
+                    return DragEventInjector;
                 }(gesture.EventInjector));
-                gesture.LongClickEventInjector = LongClickEventInjector;
+                gesture.DragEventInjector = DragEventInjector;
             })(gesture = laya.gesture || (laya.gesture = {}));
         })(laya = lujun.laya || (lujun.laya = {}));
     })(lujun = co.lujun || (co.lujun = {}));
 })(co || (co = {}));
-//# sourceMappingURL=LongClickEventInjector.js.map
+//# sourceMappingURL=DragEventInjector.js.map
