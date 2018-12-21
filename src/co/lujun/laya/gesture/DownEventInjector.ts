@@ -28,22 +28,22 @@ module co.lujun.laya.gesture{
 			this._listener.call(this._caller, x, y);
 		}
 
-		onMouseDown(e: Event): void{
+		onMouseDown(e: Laya.Event): void{
 			this.invokeMouseDown(this._sprite.mouseX, this._sprite.mouseY);
 		}
 
-		onMouseMove(e: Event): void{}
+		onMouseMove(e: Laya.Event): void{}
 
-		onMouseUp(e: Event): void{}
+		onMouseUp(e: Laya.Event): void{}
 
-		onMouseOut(e: Event): void{}
+		onMouseOut(e: Laya.Event): void{}
 
-		onMouseOver(e: Event): void{}
+		onMouseOver(e: Laya.Event): void{}
 
-		onMouseWheel(e: Event): void{}
+		onMouseWheel(e: Laya.Event): void{}
 
-		onRightMouseDown(e: Event): void{}
+		onRightMouseDown(e: Laya.Event): void{}
 
-		onRightMouseUp(e: Event): void{}
+		onRightMouseUp(e: Laya.Event): void{}
 	}
 }

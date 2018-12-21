@@ -39,23 +39,37 @@ var view;
         function GestureView() {
             var _this = _super.call(this) || this;
             _this.restoreBtn.on(Laya.Event.CLICK, _this, _this.restore);
-            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.LONG_CLICK, _this, _this.longClick);
-            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.DRAG, _this, _this.mouseDrag);
-            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.DOWN, _this, _this.mouseDown);
+            // LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.LONG_CLICK, this, this.longClick);
+            // LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DRAG, this, this.mouseDrag);
+            // LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DOWN, this, this.mouseDown);
+            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.SCALE, _this, _this.mouseScale);
             return _this;
         }
         GestureView.prototype.longClick = function () {
-            console.log("mouse long click");
+            this.log("mouse long click");
             LayaGestureManager.getInstance().offGestureEvent(this.testImg, Gesture.LONG_CLICK);
         };
         GestureView.prototype.mouseDrag = function (mouseSpriteX, mouseSpriteY) {
             this.testImg.pos(Laya.stage.mouseX - mouseSpriteX, Laya.stage.mouseY - mouseSpriteY);
         };
         GestureView.prototype.mouseDown = function (x, y) {
-            console.log("mouse down x = " + x + ", y = " + y);
+            this.log("mouse down x = " + x + ", y = " + y);
+        };
+        GestureView.prototype.mouseScale = function (scaleX, scaleY, rotation) {
+            var scale = (Math.max(0, this.testImg.scaleX + scaleX) + Math.max(0, this.testImg.scaleY + scaleY)) / 2;
+            // this.testImg.pivot()
+            this.testImg.scaleX = scale;
+            this.testImg.scaleY = scale;
+            this.testImg.rotation += rotation;
+            this.log("mouse scale scaleX = " + scaleX + ", scaleY = " + scaleX + ", rotation = " + rotation);
         };
         GestureView.prototype.restore = function () {
-            this.testImg.pos(310, 500);
+            this.testImg.pos(385, 625);
+            this.testImg.scale(1, 1);
+            this.testImg.rotation = 0;
+        };
+        GestureView.prototype.log = function (msg) {
+            this.logText.text = msg;
         };
         return GestureView;
     }(ui.GestureViewUI));

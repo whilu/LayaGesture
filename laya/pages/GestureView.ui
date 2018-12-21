@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":500,"x":310,"var":"testImg","skin":"comp/image.png"},
+            "props":{"y":682,"x":348,"width":500,"var":"testImg","skin":"comp/image.png","pivotY":250,"pivotX":250,"height":500},
             "nodeParent":1,
             "label":"Image(testImg)",
             "isDirectory":false,
@@ -35,6 +35,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":3,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Text",
+            "props":{"y":0,"x":0,"wordWrap":true,"width":748,"var":"logText","overflow":"scroll","height":543,"fontSize":30,"color":"#ff0400"},
+            "nodeParent":1,
+            "label":"Text(logText)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":4,
             "child":[
                 ]
         }],

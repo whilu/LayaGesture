@@ -28,13 +28,14 @@ module view{
 			super();
 			
 			this.restoreBtn.on(Laya.Event.CLICK, this, this.restore);
-			LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.LONG_CLICK, this, this.longClick);
-			LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DRAG, this, this.mouseDrag);
-			LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DOWN, this, this.mouseDown);
+			// LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.LONG_CLICK, this, this.longClick);
+			// LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DRAG, this, this.mouseDrag);
+			// LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DOWN, this, this.mouseDown);
+			LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.SCALE, this, this.mouseScale);
 		}
 
-		private longClick(){
-			console.log("mouse long click");
+		private longClick(): void{
+			this.log("mouse long click");
 			LayaGestureManager.getInstance().offGestureEvent(this.testImg, Gesture.LONG_CLICK);
 		}
 
@@ -43,11 +44,26 @@ module view{
 		}
 
 		private mouseDown(x: number, y: number): void{
-			console.log("mouse down x = " + x + ", y = " + y);
+			this.log("mouse down x = " + x + ", y = " + y);
+		}
+
+		private mouseScale(scaleX: number, scaleY: number, rotation: number): void{
+			let scale: number = (Math.max(0, this.testImg.scaleX + scaleX) + Math.max(0, this.testImg.scaleY + scaleY)) / 2;
+			// this.testImg.pivot()
+			this.testImg.scaleX = scale;
+			this.testImg.scaleY = scale;
+			this.testImg.rotation += rotation;
+			this.log("mouse scale scaleX = " + scaleX + ", scaleY = " + scaleX + ", rotation = " + rotation);
 		}
 		
 		private restore(){
-			this.testImg.pos(310, 500);
+			this.testImg.pos(385, 625);
+			this.testImg.scale(1, 1);
+			this.testImg.rotation = 0;
+		}
+
+		private log(msg: string): void{
+			this.logText.text = msg;
 		}
 	}
 }

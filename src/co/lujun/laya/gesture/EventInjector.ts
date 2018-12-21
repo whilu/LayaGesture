@@ -60,20 +60,20 @@ module co.lujun.laya.gesture{
 			this._sprite.off(Laya.Event.RIGHT_MOUSE_UP, this, this.onRightMouseUp);
 		}
 
-		abstract onMouseDown(e: Event): any;
+		abstract onMouseDown(e: Laya.Event): any;
 
-		abstract onMouseMove(e: Event): any;
+		abstract onMouseMove(e: Laya.Event): any;
 
-		abstract onMouseUp(e: Event): any;
+		abstract onMouseUp(e: Laya.Event): any;
 
-		abstract onMouseOut(e: Event): any;
+		abstract onMouseOut(e: Laya.Event): any;
 
-		abstract onMouseOver(e: Event): any;
+		abstract onMouseOver(e: Laya.Event): any;
 
-		abstract onMouseWheel(e: Event): any;
+		abstract onMouseWheel(e: Laya.Event): any;
 
-		abstract onRightMouseDown(e: Event): any;
+		abstract onRightMouseDown(e: Laya.Event): any;
 
-		abstract onRightMouseUp(e: Event): any;
+		abstract onRightMouseUp(e: Laya.Event): any;
 	}
 }

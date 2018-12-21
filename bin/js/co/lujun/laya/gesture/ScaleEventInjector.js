@@ -43,13 +43,37 @@ var co;
                 var ScaleEventInjector = /** @class */ (function (_super) {
                     __extends(ScaleEventInjector, _super);
                     function ScaleEventInjector() {
-                        return _super !== null && _super.apply(this, arguments) || this;
+                        var _this = _super !== null && _super.apply(this, arguments) || this;
+                        _this._scaleFactor = 0.01;
+                        return _this;
                     }
                     ScaleEventInjector.prototype.invokeMouseScale = function (scaleX, scaleY, rotation) {
                         this._listener.call(this._caller, scaleX, scaleY, rotation);
                     };
-                    ScaleEventInjector.prototype.onMouseDown = function (e) { };
-                    ScaleEventInjector.prototype.onMouseMove = function (e) { };
+                    ScaleEventInjector.prototype.onMouseDown = function (e) {
+                        if (e.touches && e.touches.length == 2) {
+                            this._mouseDownPointL = new Laya.Point(e.touches[0].stageX, e.touches[0].stageY);
+                            this._mouseDownPointR = new Laya.Point(e.touches[1].stageX, e.touches[1].stageY);
+                        }
+                    };
+                    ScaleEventInjector.prototype.onMouseMove = function (e) {
+                        if (e.touches && e.touches.length == 2) {
+                            var lastXDistance = Math.abs(this._mouseDownPointL.x - this._mouseDownPointR.x);
+                            var lastYDistance = Math.abs(this._mouseDownPointL.y - this._mouseDownPointR.y);
+                            var curXDistance = Math.abs(e.touches[0].stageX - e.touches[1].stageX);
+                            var curYDistance = Math.abs(e.touches[0].stageY - e.touches[1].stageY);
+                            var rotateCenterX = e.touches[0].stageX;
+                            var rotateCenterY = e.touches[0].stageY;
+                            var tmpAngel1 = void 0, tmpAngel2 = void 0;
+                            tmpAngel1 = Math.atan((e.touches[1].stageY - rotateCenterY) / (e.touches[1].stageX - rotateCenterX)) * 180 / Math.PI
+                                - Math.atan((this._mouseDownPointR.y - rotateCenterY) / (this._mouseDownPointR.x - rotateCenterX)) * 180 / Math.PI;
+                            this._mouseDownPointL.x = e.touches[0].stageX;
+                            this._mouseDownPointL.y = e.touches[0].stageY;
+                            this._mouseDownPointR.x = e.touches[1].stageX;
+                            this._mouseDownPointR.y = e.touches[1].stageY;
+                            this.invokeMouseScale((curXDistance - lastXDistance) * this._scaleFactor, (curYDistance - lastYDistance) * this._scaleFactor, tmpAngel1);
+                        }
+                    };
                     ScaleEventInjector.prototype.onMouseUp = function (e) { };
                     ScaleEventInjector.prototype.onMouseOut = function (e) { };
                     ScaleEventInjector.prototype.onMouseOver = function (e) { };
