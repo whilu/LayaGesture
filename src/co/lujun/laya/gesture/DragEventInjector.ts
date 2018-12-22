@@ -28,6 +28,11 @@ module co.lujun.laya.gesture{
 		private _mouseDownX: number;
 		private _mouseDownY: number;
 
+		/**
+		 * Invoke when receive mouse drag event.
+		 * @param mouseSpriteX The mouse x coordinate in the sprite.
+		 * @param mouseSpriteY The mouse y coordinate in the sprite.
+		 */
 		private invokeMouseDrag(mouseSpriteX: number, mouseSpriteY: number): void{
 			this._listener.call(this._caller, mouseSpriteX, mouseSpriteY);
 		}

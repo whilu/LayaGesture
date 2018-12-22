@@ -29,6 +29,12 @@ module co.lujun.laya.gesture{
 
 		private _scaleFactor: number = 0.01;
 
+		/**
+		 * Invoke when receive mouse scale event.
+		 * @param scaleX The x-axis scale ratio.
+		 * @param scaleY The y-axis scale ratio.
+		 * @param rotation The rotaion between to touches.
+		 */
 		private invokeMouseScale(scaleX: number, scaleY: number, rotation: number): void{
 			this._listener.call(this._caller, scaleX, scaleY, rotation);
 		}

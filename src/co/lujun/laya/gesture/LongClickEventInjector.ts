@@ -28,6 +28,9 @@ module co.lujun.laya.gesture{
 		private _longClickDurationTime: number = 1000;
 		private _mouseDown: boolean = false;
 
+		/**
+		 * Invoke when receive mouse long click event.
+		 */
 		private invokeMouseLongClick(): void{
 			if(!this._mouseDown || new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime){
 				return;

@@ -45,6 +45,11 @@ var co;
                     function DragEventInjector() {
                         return _super !== null && _super.apply(this, arguments) || this;
                     }
+                    /**
+                     * Invoke when receive mouse drag event.
+                     * @param mouseSpriteX The mouse x coordinate in the sprite.
+                     * @param mouseSpriteY The mouse y coordinate in the sprite.
+                     */
                     DragEventInjector.prototype.invokeMouseDrag = function (mouseSpriteX, mouseSpriteY) {
                         this._listener.call(this._caller, mouseSpriteX, mouseSpriteY);
                     };

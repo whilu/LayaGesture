@@ -46,6 +46,13 @@ var co;
                             this.mSpriteCache[gesture] = [];
                         }
                     };
+                    /**
+                     * Register gesture event.
+                     * @param sprite The sprite for receive gesture event.
+                     * @param gesture Gesture, see co.lujun.laya.gesture.Gesture.
+                     * @param caller The caller for the gesture event.
+                     * @param listener The callback for the gesture event.
+                     */
                     LayaGestureManager.prototype.onGestureEvent = function (sprite, gesture, caller, listener) {
                         this.init(gesture);
                         var eventInjector;
@@ -79,6 +86,11 @@ var co;
                             this.mSpriteCache[gesture].push(sprite);
                         }
                     };
+                    /**
+                     * Unregister the sprite's gesture event.
+                     * @param sprite The sprite that need to unregister gesture event.
+                     * @param gesture The gesture, see co.lujun.laya.gesture.Gesture.
+                     */
                     LayaGestureManager.prototype.offGestureEvent = function (sprite, gesture) {
                         this.init(gesture);
                         var idx = this.mSpriteCache[gesture].indexOf(sprite);
@@ -91,6 +103,10 @@ var co;
                             this.mSpriteCache[gesture].splice(idx, 1);
                         }
                     };
+                    /**
+                     * Unregister all the sprite's gesture event.
+                     * @param sprite The sprite that need to unregister all gesture event.
+                     */
                     LayaGestureManager.prototype.offAllGestureEvent = function (sprite) {
                         this.offGestureEvent(sprite, gesture_1.Gesture.DOWN);
                         this.offGestureEvent(sprite, gesture_1.Gesture.DRAG);

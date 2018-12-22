@@ -28,6 +28,13 @@ module co.lujun.laya.gesture{
 		private _mouseDownY: number;
 		private _mouseDownTimeMills: number;
 
+		/**
+		 * Invoke when receive mouse fling event.
+		 * @param speedX The speed in x-axis direction.
+		 * @param speedY The speed in y-axis direction.
+		 * @param mouseDownPoint The point when mouse down.
+		 * @param mouseUpPoint The point when mouse up.
+		 */
 		private invokeMouseFling(speedX: number, speedY: number, mouseDownPoint: Laya.Point, mouseUpPoint: Laya.Point): void{
 			this._listener.call(this._caller, speedX, speedY, mouseDownPoint, mouseUpPoint);
 		}

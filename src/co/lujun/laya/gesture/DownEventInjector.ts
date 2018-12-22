@@ -24,6 +24,11 @@ module co.lujun.laya.gesture{
 
 	export class DownEventInjector extends EventInjector{
 
+		/**
+		 * Invoke when receive mouse down event.
+		 * @param x Mouse down x coordinate.
+		 * @param y Mouse down y coordinate.
+		 */
 		private invokeMouseDown(x: number, y: number): void{
 			this._listener.call(this._caller, x, y);
 		}

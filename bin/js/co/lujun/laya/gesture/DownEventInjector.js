@@ -45,6 +45,11 @@ var co;
                     function DownEventInjector() {
                         return _super !== null && _super.apply(this, arguments) || this;
                     }
+                    /**
+                     * Invoke when receive mouse down event.
+                     * @param x Mouse down x coordinate.
+                     * @param y Mouse down y coordinate.
+                     */
                     DownEventInjector.prototype.invokeMouseDown = function (x, y) {
                         this._listener.call(this._caller, x, y);
                     };

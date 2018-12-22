@@ -50,6 +50,13 @@ module co.lujun.laya.gesture{
 			}
 		}
 
+		/**
+		 * Register gesture event.
+		 * @param sprite The sprite for receive gesture event.
+		 * @param gesture Gesture, see co.lujun.laya.gesture.Gesture.
+		 * @param caller The caller for the gesture event.
+		 * @param listener The callback for the gesture event.
+		 */
 		public onGestureEvent(sprite: Laya.Sprite, gesture: string, caller: any, listener: (p1?: any, p2?: any, p3?: any, p4?: any) => void){
 			this.init(gesture);
 
@@ -89,6 +96,11 @@ module co.lujun.laya.gesture{
 			}
 		}
 
+		/**
+		 * Unregister the sprite's gesture event.
+		 * @param sprite The sprite that need to unregister gesture event.
+		 * @param gesture The gesture, see co.lujun.laya.gesture.Gesture.
+		 */
 		public offGestureEvent(sprite: Laya.Sprite, gesture: string){
 			this.init(gesture);
 
@@ -103,6 +115,10 @@ module co.lujun.laya.gesture{
 			}
 		}
 
+		/**
+		 * Unregister all the sprite's gesture event.
+		 * @param sprite The sprite that need to unregister all gesture event.
+		 */
 		public offAllGestureEvent(sprite: Laya.Sprite): void{
 			this.offGestureEvent(sprite, Gesture.DOWN);
 			this.offGestureEvent(sprite, Gesture.DRAG);

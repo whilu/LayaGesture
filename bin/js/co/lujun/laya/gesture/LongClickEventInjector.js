@@ -48,6 +48,9 @@ var co;
                         _this._mouseDown = false;
                         return _this;
                     }
+                    /**
+                     * Invoke when receive mouse long click event.
+                     */
                     LongClickEventInjector.prototype.invokeMouseLongClick = function () {
                         if (!this._mouseDown || new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime) {
                             return;

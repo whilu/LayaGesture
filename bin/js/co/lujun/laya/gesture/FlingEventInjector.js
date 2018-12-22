@@ -45,6 +45,13 @@ var co;
                     function FlingEventInjector() {
                         return _super !== null && _super.apply(this, arguments) || this;
                     }
+                    /**
+                     * Invoke when receive mouse fling event.
+                     * @param speedX The speed in x-axis direction.
+                     * @param speedY The speed in y-axis direction.
+                     * @param mouseDownPoint The point when mouse down.
+                     * @param mouseUpPoint The point when mouse up.
+                     */
                     FlingEventInjector.prototype.invokeMouseFling = function (speedX, speedY, mouseDownPoint, mouseUpPoint) {
                         this._listener.call(this._caller, speedX, speedY, mouseDownPoint, mouseUpPoint);
                     };

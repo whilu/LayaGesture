@@ -47,6 +47,12 @@ var co;
                         _this._scaleFactor = 0.01;
                         return _this;
                     }
+                    /**
+                     * Invoke when receive mouse scale event.
+                     * @param scaleX The x-axis scale ratio.
+                     * @param scaleY The y-axis scale ratio.
+                     * @param rotation The rotaion between to touches.
+                     */
                     ScaleEventInjector.prototype.invokeMouseScale = function (scaleX, scaleY, rotation) {
                         this._listener.call(this._caller, scaleX, scaleY, rotation);
                     };
