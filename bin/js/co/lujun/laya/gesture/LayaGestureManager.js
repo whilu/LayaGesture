@@ -87,6 +87,8 @@ var co;
                             this.mSpriteCache[gesture].splice(idx, 1);
                         }
                     };
+                    LayaGestureManager.prototype.offAllGestureEvent = function (sprite) {
+                    };
                     return LayaGestureManager;
                 }());
                 gesture_1.LayaGestureManager = LayaGestureManager;

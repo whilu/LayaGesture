@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":2,
+    "selecteID":10,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":682,"x":348,"width":500,"var":"testImg","skin":"comp/image.png","pivotY":250,"pivotX":250,"height":500},
+            "props":{"y":600,"x":375,"width":310,"var":"testImg","skin":"comp/image.png","pivotY":256.5,"pivotX":155,"height":517},
             "nodeParent":1,
             "label":"Image(testImg)",
             "isDirectory":false,
@@ -27,27 +27,79 @@
         },
         {
             "x":15,
-            "type":"Button",
-            "props":{"y":1218,"x":235,"width":291,"var":"restoreBtn","skin":"comp/button.png","label":"Restore","height":97},
-            "nodeParent":1,
-            "label":"Button(restoreBtn)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":3,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
             "type":"Text",
-            "props":{"y":0,"x":0,"wordWrap":true,"width":748,"var":"logText","overflow":"scroll","height":543,"fontSize":30,"color":"#ff0400"},
+            "props":{"y":0,"x":0,"wordWrap":true,"width":748,"var":"logText","overflow":"scroll","height":245,"fontSize":30,"color":"#ff0400"},
             "nodeParent":1,
             "label":"Text(logText)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":4,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":1099,"x":53,"width":96,"var":"DownBtn","skin":"comp/button.png","label":"Down","height":71},
+            "nodeParent":1,
+            "label":"Button(DownBtn)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":5,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":1099,"x":184,"width":96,"var":"LongClickBtn","skin":"comp/button.png","label":"LongClick","height":71},
+            "nodeParent":1,
+            "label":"Button(LongClickBtn)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":7,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":1099,"x":315,"width":96,"var":"DragBtn","skin":"comp/button.png","label":"Drag","height":71},
+            "nodeParent":1,
+            "label":"Button(DragBtn)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":8,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":1099,"x":449,"width":96,"var":"ScaleBtn","skin":"comp/button.png","label":"Scale","height":71},
+            "nodeParent":1,
+            "label":"Button(ScaleBtn)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":9,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":1099,"x":582,"width":96,"var":"FlingBtn","skin":"comp/button.png","label":"Fling","height":71},
+            "nodeParent":1,
+            "label":"Button(FlingBtn)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":10,
             "child":[
                 ]
         }],

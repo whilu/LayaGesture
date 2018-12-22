@@ -38,11 +38,31 @@ var view;
         __extends(GestureView, _super);
         function GestureView() {
             var _this = _super.call(this) || this;
-            _this.restoreBtn.on(Laya.Event.CLICK, _this, _this.restore);
-            // LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.LONG_CLICK, this, this.longClick);
-            // LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DRAG, this, this.mouseDrag);
-            // LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DOWN, this, this.mouseDown);
-            LayaGestureManager.getInstance().onGestureEvent(_this.testImg, Gesture.SCALE, _this, _this.mouseScale);
+            _this.DownBtn.on(Laya.Event.CLICK, _this, function () {
+                this.restore();
+                LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+                LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DOWN, this, this.mouseDown);
+            });
+            _this.LongClickBtn.on(Laya.Event.CLICK, _this, function () {
+                this.restore();
+                LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+                LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.LONG_CLICK, this, this.longClick);
+            });
+            _this.DragBtn.on(Laya.Event.CLICK, _this, function () {
+                this.restore();
+                LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+                LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DRAG, this, this.mouseDrag);
+            });
+            _this.ScaleBtn.on(Laya.Event.CLICK, _this, function () {
+                this.restore();
+                LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+                LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.SCALE, this, this.mouseScale);
+            });
+            _this.FlingBtn.on(Laya.Event.CLICK, _this, function () {
+                this.restore();
+                LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+                LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.FLING, this, this.mouseFling);
+            });
             return _this;
         }
         GestureView.prototype.longClick = function () {
@@ -56,15 +76,19 @@ var view;
             this.log("mouse down x = " + x + ", y = " + y);
         };
         GestureView.prototype.mouseScale = function (scaleX, scaleY, rotation) {
+            var maxScale = 2.3;
+            var minScale = 0.5;
             var scale = (Math.max(0, this.testImg.scaleX + scaleX) + Math.max(0, this.testImg.scaleY + scaleY)) / 2;
-            // this.testImg.pivot()
             this.testImg.scaleX = scale;
             this.testImg.scaleY = scale;
             this.testImg.rotation += rotation;
-            this.log("mouse scale scaleX = " + scaleX + ", scaleY = " + scaleX + ", rotation = " + rotation);
+            this.log("mouse scale scaleX = " + this.testImg.scaleX + ", scaleY = " + scaleY + ", rotation = " + rotation);
+        };
+        GestureView.prototype.mouseFling = function (speedX, speedY, mouseDownPoint, mouseUpPoint) {
+            this.log("mouse fling speedX = " + speedX + ", speedY = " + speedY + ", mouseDownPoint = " + mouseDownPoint + ", mouseUpPoint = " + mouseUpPoint);
         };
         GestureView.prototype.restore = function () {
-            this.testImg.pos(385, 625);
+            this.testImg.pos(375, 600);
             this.testImg.scale(1, 1);
             this.testImg.rotation = 0;
         };

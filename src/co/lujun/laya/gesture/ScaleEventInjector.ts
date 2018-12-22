@@ -47,19 +47,32 @@ module co.lujun.laya.gesture{
 				let curXDistance: number = Math.abs(e.touches[0].stageX - e.touches[1].stageX);
 				let curYDistance: number = Math.abs(e.touches[0].stageY - e.touches[1].stageY);
 
-				let rotateCenterX: number = e.touches[0].stageX;
-				let rotateCenterY: number = e.touches[0].stageY;
+				let tmpDistance1: number = Math.sqrt(Math.pow((this._mouseDownPointL.x - e.touches[0].stageX), 2) 
+					+ Math.pow((this._mouseDownPointL.y - e.touches[0].stageY), 2));
+				let tmpDistance2: number = Math.sqrt(Math.pow((this._mouseDownPointR.x - e.touches[1].stageX), 2) 
+					+ Math.pow((this._mouseDownPointR.y - e.touches[1].stageY), 2));
 
-				let tmpAngel1: number, tmpAngel2: number;
-				tmpAngel1 = Math.atan((e.touches[1].stageY - rotateCenterY) / (e.touches[1].stageX - rotateCenterX)) * 180 / Math.PI
-						- Math.atan((this._mouseDownPointR.y - rotateCenterY) / (this._mouseDownPointR.x - rotateCenterX)) * 180 / Math.PI;
+				let tmpAngel: number, tmpAngel1: number, tmpAngel2: number;
+				if(tmpDistance1 > tmpDistance2){
+					tmpAngel1 = Math.atan(Math.abs(e.touches[0].stageY - e.touches[1].stageY) / Math.abs(e.touches[0].stageX - e.touches[1].stageX)) * 180 / Math.PI;
+					tmpAngel2 = Math.atan(Math.abs(this._mouseDownPointL.y - e.touches[1].stageY) / Math.abs(this._mouseDownPointL.x - e.touches[1].stageX)) * 180 / Math.PI;
+					tmpAngel = (e.touches[0].stageX > e.touches[1].stageX && e.touches[0].stageY < e.touches[1].stageY)
+						|| (e.touches[0].stageX < e.touches[1].stageX && e.touches[0].stageY > e.touches[1].stageY) 
+						? tmpAngel2 - tmpAngel1 : tmpAngel1 - tmpAngel2;
+				}else{
+					tmpAngel1 = Math.atan(Math.abs(e.touches[1].stageY - e.touches[0].stageY) / Math.abs(e.touches[1].stageX - e.touches[0].stageX)) * 180 / Math.PI;
+					tmpAngel2 = Math.atan(Math.abs(this._mouseDownPointR.y - e.touches[0].stageY) / Math.abs(this._mouseDownPointR.x - e.touches[0].stageX)) * 180 / Math.PI;
+					tmpAngel = (e.touches[1].stageX > e.touches[0].stageX && e.touches[1].stageY < e.touches[0].stageY)
+						|| (e.touches[1].stageX < e.touches[0].stageX && e.touches[1].stageY > e.touches[0].stageY) 
+						? tmpAngel2 - tmpAngel1 : tmpAngel1 - tmpAngel2;
+				}
 
 				this._mouseDownPointL.x = e.touches[0].stageX;
 				this._mouseDownPointL.y = e.touches[0].stageY;
 				this._mouseDownPointR.x = e.touches[1].stageX;
 				this._mouseDownPointR.y = e.touches[1].stageY;
 
-				this.invokeMouseScale((curXDistance - lastXDistance) * this._scaleFactor, (curYDistance - lastYDistance) * this._scaleFactor, tmpAngel1);
+				this.invokeMouseScale((curXDistance - lastXDistance) * this._scaleFactor, (curYDistance - lastYDistance) * this._scaleFactor, tmpAngel);
 			}
 		}
 

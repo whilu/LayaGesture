@@ -27,11 +27,31 @@ module view{
 		constructor(){
 			super();
 			
-			this.restoreBtn.on(Laya.Event.CLICK, this, this.restore);
-			// LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.LONG_CLICK, this, this.longClick);
-			// LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DRAG, this, this.mouseDrag);
-			// LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DOWN, this, this.mouseDown);
-			LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.SCALE, this, this.mouseScale);
+			this.DownBtn.on(Laya.Event.CLICK, this, function(){
+				this.restore();
+				LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+				LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DOWN, this, this.mouseDown);
+			});
+			this.LongClickBtn.on(Laya.Event.CLICK, this, function(){
+				this.restore();
+				LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+				LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.LONG_CLICK, this, this.longClick);
+			});
+			this.DragBtn.on(Laya.Event.CLICK, this, function(){
+				this.restore();
+				LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+				LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.DRAG, this, this.mouseDrag);
+			});
+			this.ScaleBtn.on(Laya.Event.CLICK, this, function(){
+				this.restore();
+				LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+				LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.SCALE, this, this.mouseScale);
+			});
+			this.FlingBtn.on(Laya.Event.CLICK, this, function(){
+				this.restore();
+				LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
+				LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.FLING, this, this.mouseFling);
+			});
 		}
 
 		private longClick(): void{
@@ -48,16 +68,22 @@ module view{
 		}
 
 		private mouseScale(scaleX: number, scaleY: number, rotation: number): void{
+			let maxScale: number = 2.3;
+			let minScale: number = 0.5;
 			let scale: number = (Math.max(0, this.testImg.scaleX + scaleX) + Math.max(0, this.testImg.scaleY + scaleY)) / 2;
-			// this.testImg.pivot()
 			this.testImg.scaleX = scale;
 			this.testImg.scaleY = scale;
 			this.testImg.rotation += rotation;
-			this.log("mouse scale scaleX = " + scaleX + ", scaleY = " + scaleX + ", rotation = " + rotation);
+			this.log("mouse scale scaleX = " + this.testImg.scaleX + ", scaleY = " + scaleY + ", rotation = " + rotation);
+		}
+
+		private mouseFling(speedX: number, speedY: number, mouseDownPoint: number, mouseUpPoint: number): void{
+
+			this.log("mouse fling speedX = " + speedX + ", speedY = " + speedY + ", mouseDownPoint = " + mouseDownPoint + ", mouseUpPoint = " + mouseUpPoint);
 		}
 		
 		private restore(){
-			this.testImg.pos(385, 625);
+			this.testImg.pos(375, 600);
 			this.testImg.scale(1, 1);
 			this.testImg.rotation = 0;
 		}

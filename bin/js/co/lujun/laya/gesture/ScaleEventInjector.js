@@ -62,16 +62,30 @@ var co;
                             var lastYDistance = Math.abs(this._mouseDownPointL.y - this._mouseDownPointR.y);
                             var curXDistance = Math.abs(e.touches[0].stageX - e.touches[1].stageX);
                             var curYDistance = Math.abs(e.touches[0].stageY - e.touches[1].stageY);
-                            var rotateCenterX = e.touches[0].stageX;
-                            var rotateCenterY = e.touches[0].stageY;
-                            var tmpAngel1 = void 0, tmpAngel2 = void 0;
-                            tmpAngel1 = Math.atan((e.touches[1].stageY - rotateCenterY) / (e.touches[1].stageX - rotateCenterX)) * 180 / Math.PI
-                                - Math.atan((this._mouseDownPointR.y - rotateCenterY) / (this._mouseDownPointR.x - rotateCenterX)) * 180 / Math.PI;
+                            var tmpDistance1 = Math.sqrt(Math.pow((this._mouseDownPointL.x - e.touches[0].stageX), 2)
+                                + Math.pow((this._mouseDownPointL.y - e.touches[0].stageY), 2));
+                            var tmpDistance2 = Math.sqrt(Math.pow((this._mouseDownPointR.x - e.touches[1].stageX), 2)
+                                + Math.pow((this._mouseDownPointR.y - e.touches[1].stageY), 2));
+                            var tmpAngel = void 0, tmpAngel1 = void 0, tmpAngel2 = void 0;
+                            if (tmpDistance1 > tmpDistance2) {
+                                tmpAngel1 = Math.atan(Math.abs(e.touches[0].stageY - e.touches[1].stageY) / Math.abs(e.touches[0].stageX - e.touches[1].stageX)) * 180 / Math.PI;
+                                tmpAngel2 = Math.atan(Math.abs(this._mouseDownPointL.y - e.touches[1].stageY) / Math.abs(this._mouseDownPointL.x - e.touches[1].stageX)) * 180 / Math.PI;
+                                tmpAngel = (e.touches[0].stageX > e.touches[1].stageX && e.touches[0].stageY < e.touches[1].stageY)
+                                    || (e.touches[0].stageX < e.touches[1].stageX && e.touches[0].stageY > e.touches[1].stageY)
+                                    ? tmpAngel2 - tmpAngel1 : tmpAngel1 - tmpAngel2;
+                            }
+                            else {
+                                tmpAngel1 = Math.atan(Math.abs(e.touches[1].stageY - e.touches[0].stageY) / Math.abs(e.touches[1].stageX - e.touches[0].stageX)) * 180 / Math.PI;
+                                tmpAngel2 = Math.atan(Math.abs(this._mouseDownPointR.y - e.touches[0].stageY) / Math.abs(this._mouseDownPointR.x - e.touches[0].stageX)) * 180 / Math.PI;
+                                tmpAngel = (e.touches[1].stageX > e.touches[0].stageX && e.touches[1].stageY < e.touches[0].stageY)
+                                    || (e.touches[1].stageX < e.touches[0].stageX && e.touches[1].stageY > e.touches[0].stageY)
+                                    ? tmpAngel2 - tmpAngel1 : tmpAngel1 - tmpAngel2;
+                            }
                             this._mouseDownPointL.x = e.touches[0].stageX;
                             this._mouseDownPointL.y = e.touches[0].stageY;
                             this._mouseDownPointR.x = e.touches[1].stageX;
                             this._mouseDownPointR.y = e.touches[1].stageY;
-                            this.invokeMouseScale((curXDistance - lastXDistance) * this._scaleFactor, (curYDistance - lastYDistance) * this._scaleFactor, tmpAngel1);
+                            this.invokeMouseScale((curXDistance - lastXDistance) * this._scaleFactor, (curYDistance - lastYDistance) * this._scaleFactor, tmpAngel);
                         }
                     };
                     ScaleEventInjector.prototype.onMouseUp = function (e) { };

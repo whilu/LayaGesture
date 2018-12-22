@@ -96,5 +96,9 @@ module co.lujun.laya.gesture{
 				this.mSpriteCache[gesture].splice(idx, 1);
 			}
 		}
+
+		public offAllGestureEvent(sprite: Laya.Sprite): void{
+
+		}
 	}
 }
