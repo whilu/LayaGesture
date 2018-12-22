@@ -46,6 +46,7 @@ module view{
 				this.restore();
 				LayaGestureManager.getInstance().offAllGestureEvent(this.testImg);
 				LayaGestureManager.getInstance().onGestureEvent(this.testImg, Gesture.SCALE, this, this.mouseScale);
+				Laya.stage.on(Laya.Event.MOUSE_UP, this, this.mouseScaleUp);
 			});
 			this.FlingBtn.on(Laya.Event.CLICK, this, function(){
 				this.restore();
@@ -68,13 +69,22 @@ module view{
 		}
 
 		private mouseScale(scaleX: number, scaleY: number, rotation: number): void{
-			let maxScale: number = 2.3;
-			let minScale: number = 0.5;
 			let scale: number = (Math.max(0, this.testImg.scaleX + scaleX) + Math.max(0, this.testImg.scaleY + scaleY)) / 2;
 			this.testImg.scaleX = scale;
 			this.testImg.scaleY = scale;
 			this.testImg.rotation += rotation;
 			this.log("mouse scale scaleX = " + this.testImg.scaleX + ", scaleY = " + scaleY + ", rotation = " + rotation);
+		}
+
+		private mouseScaleUp(){
+			this.log("mouse scale up scaleX = " + this.testImg.scaleX);
+			let maxScale: number = 2.3;
+			let minScale: number = 0.7;
+			if(this.testImg.scaleX > maxScale){
+				Laya.Tween.to(this.testImg, {scaleX: maxScale, scaleY: maxScale}, 200);
+			}else if(this.testImg.scaleX < minScale){
+				Laya.Tween.to(this.testImg, {scaleX: 1, scaleY: 1}, 200);
+			}
 		}
 
 		private mouseFling(speedX: number, speedY: number, mouseDownPoint: number, mouseUpPoint: number): void{
@@ -86,6 +96,7 @@ module view{
 			this.testImg.pos(375, 600);
 			this.testImg.scale(1, 1);
 			this.testImg.rotation = 0;
+			Laya.stage.offAll();
 		}
 
 		private log(msg: string): void{
