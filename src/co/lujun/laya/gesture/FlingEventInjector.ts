@@ -24,15 +24,27 @@ module co.lujun.laya.gesture{
 
 	export class FlingEventInjector extends EventInjector{
 
-		private invokeMouseFling(speedX: number, speedY: number, mouseDownPoint: number, mouseUpPoint: number): void{
+		private _mouseDownX: number;
+		private _mouseDownY: number;
+		private _mouseDownTimeMills: number;
+
+		private invokeMouseFling(speedX: number, speedY: number, mouseDownPoint: Laya.Point, mouseUpPoint: Laya.Point): void{
 			this._listener.call(this._caller, speedX, speedY, mouseDownPoint, mouseUpPoint);
 		}
 
-		onMouseDown(e: Laya.Event): void{}
+		onMouseDown(e: Laya.Event): void{
+			this._mouseDownX = Laya.stage.mouseX;
+			this._mouseDownY = Laya.stage.mouseY;
+			this._mouseDownTimeMills = new Date().getTime();
+		}
 
 		onMouseMove(e: Laya.Event): void{}
 
-		onMouseUp(e: Laya.Event): void{}
+		onMouseUp(e: Laya.Event): void{
+			let deltaTimeMills: number = new Date().getTime() - this._mouseDownTimeMills;
+			this.invokeMouseFling((Laya.stage.mouseX - this._mouseDownX) / deltaTimeMills, (Laya.stage.mouseY - this._mouseDownY) / deltaTimeMills, 
+				new Laya.Point(this._mouseDownX, this._mouseDownY), new Laya.Point(Laya.stage.mouseX, Laya.stage.mouseY));
+		}
 
 		onMouseOut(e: Laya.Event): void{}
 
@@ -43,7 +55,6 @@ module co.lujun.laya.gesture{
 		onRightMouseDown(e: Laya.Event): void{}
 
 		onRightMouseUp(e: Laya.Event): void{}
-	}
 		
 		
 	}

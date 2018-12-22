@@ -95,6 +95,8 @@ var view;
             }
         };
         GestureView.prototype.mouseFling = function (speedX, speedY, mouseDownPoint, mouseUpPoint) {
+            var endY = speedY < 0 ? -this.testImg.height : Laya.stage.height + this.testImg.height;
+            Laya.Tween.to(this.testImg, { y: endY }, Math.abs(((endY - this.testImg.y) / speedY)));
             this.log("mouse fling speedX = " + speedX + ", speedY = " + speedY + ", mouseDownPoint = " + mouseDownPoint + ", mouseUpPoint = " + mouseUpPoint);
         };
         GestureView.prototype.restore = function () {

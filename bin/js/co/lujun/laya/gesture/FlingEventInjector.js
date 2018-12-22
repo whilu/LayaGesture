@@ -48,9 +48,16 @@ var co;
                     FlingEventInjector.prototype.invokeMouseFling = function (speedX, speedY, mouseDownPoint, mouseUpPoint) {
                         this._listener.call(this._caller, speedX, speedY, mouseDownPoint, mouseUpPoint);
                     };
-                    FlingEventInjector.prototype.onMouseDown = function (e) { };
+                    FlingEventInjector.prototype.onMouseDown = function (e) {
+                        this._mouseDownX = Laya.stage.mouseX;
+                        this._mouseDownY = Laya.stage.mouseY;
+                        this._mouseDownTimeMills = new Date().getTime();
+                    };
                     FlingEventInjector.prototype.onMouseMove = function (e) { };
-                    FlingEventInjector.prototype.onMouseUp = function (e) { };
+                    FlingEventInjector.prototype.onMouseUp = function (e) {
+                        var deltaTimeMills = new Date().getTime() - this._mouseDownTimeMills;
+                        this.invokeMouseFling((Laya.stage.mouseX - this._mouseDownX) / deltaTimeMills, (Laya.stage.mouseY - this._mouseDownY) / deltaTimeMills, new Laya.Point(this._mouseDownX, this._mouseDownY), new Laya.Point(Laya.stage.mouseX, Laya.stage.mouseY));
+                    };
                     FlingEventInjector.prototype.onMouseOut = function (e) { };
                     FlingEventInjector.prototype.onMouseOver = function (e) { };
                     FlingEventInjector.prototype.onMouseWheel = function (e) { };

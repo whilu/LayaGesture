@@ -87,8 +87,9 @@ module view{
 			}
 		}
 
-		private mouseFling(speedX: number, speedY: number, mouseDownPoint: number, mouseUpPoint: number): void{
-
+		private mouseFling(speedX: number, speedY: number, mouseDownPoint: Laya.Point, mouseUpPoint: Laya.Point): void{
+			let endY: number = speedY < 0 ? -this.testImg.height : Laya.stage.height + this.testImg.height;
+			Laya.Tween.to(this.testImg, {y: endY}, Math.abs(((endY - this.testImg.y) / speedY)));
 			this.log("mouse fling speedX = " + speedX + ", speedY = " + speedY + ", mouseDownPoint = " + mouseDownPoint + ", mouseUpPoint = " + mouseUpPoint);
 		}
 		
