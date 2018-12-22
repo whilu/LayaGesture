@@ -38,13 +38,16 @@ var co;
                         }
                         return LayaGestureManager.sInstance;
                     };
-                    LayaGestureManager.prototype.onGestureEvent = function (sprite, gesture, caller, listener) {
+                    LayaGestureManager.prototype.init = function (gesture) {
                         if (this.mEventInjector[gesture] == undefined || this.mEventInjector[gesture] == null) {
                             this.mEventInjector[gesture] = [];
                         }
                         if (this.mSpriteCache[gesture] == undefined || this.mSpriteCache[gesture] == null) {
                             this.mSpriteCache[gesture] = [];
                         }
+                    };
+                    LayaGestureManager.prototype.onGestureEvent = function (sprite, gesture, caller, listener) {
+                        this.init(gesture);
                         var eventInjector;
                         switch (gesture) {
                             case gesture_1.Gesture.LONG_CLICK:
@@ -77,6 +80,7 @@ var co;
                         }
                     };
                     LayaGestureManager.prototype.offGestureEvent = function (sprite, gesture) {
+                        this.init(gesture);
                         var idx = this.mSpriteCache[gesture].indexOf(sprite);
                         if (idx > -1) {
                             var eventInjector = this.mEventInjector[gesture].splice(idx, 1);
@@ -88,6 +92,11 @@ var co;
                         }
                     };
                     LayaGestureManager.prototype.offAllGestureEvent = function (sprite) {
+                        this.offGestureEvent(sprite, gesture_1.Gesture.DOWN);
+                        this.offGestureEvent(sprite, gesture_1.Gesture.DRAG);
+                        this.offGestureEvent(sprite, gesture_1.Gesture.LONG_CLICK);
+                        this.offGestureEvent(sprite, gesture_1.Gesture.SCALE);
+                        this.offGestureEvent(sprite, gesture_1.Gesture.FLING);
                     };
                     return LayaGestureManager;
                 }());

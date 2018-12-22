@@ -26,26 +26,33 @@ module co.lujun.laya.gesture{
 
 		private _lastMouseDownTime: number;
 		private _longClickDurationTime: number = 1000;
+		private _mouseDown: boolean = false;
 
 		private invokeMouseLongClick(): void{
-			if(new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime){
+			if(!this._mouseDown || new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime){
 				return;
 			}
 			
+			this._mouseDown = false;
 			this._listener.call(this._caller, []);
 		}
 
 		onMouseDown(e: Laya.Event): void{
+			this._mouseDown = true;
 			this._lastMouseDownTime = new Date().getTime();
+			Laya.timer.clear(this, this.invokeMouseLongClick);
+			Laya.timer.loop(100, this, this.invokeMouseLongClick);
 		}
 
 		onMouseMove(e: Laya.Event): void{}
 
 		onMouseUp(e: Laya.Event): void{
-			this.invokeMouseLongClick();
+			this._mouseDown = false;
 		}
 
-		onMouseOut(e: Laya.Event): void{}
+		onMouseOut(e: Laya.Event): void{
+			this._mouseDown = false;
+		}
 
 		onMouseOver(e: Laya.Event): void{}
 

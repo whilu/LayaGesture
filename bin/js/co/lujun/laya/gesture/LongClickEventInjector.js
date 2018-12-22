@@ -45,22 +45,29 @@ var co;
                     function LongClickEventInjector() {
                         var _this = _super !== null && _super.apply(this, arguments) || this;
                         _this._longClickDurationTime = 1000;
+                        _this._mouseDown = false;
                         return _this;
                     }
                     LongClickEventInjector.prototype.invokeMouseLongClick = function () {
-                        if (new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime) {
+                        if (!this._mouseDown || new Date().getTime() - this._lastMouseDownTime < this._longClickDurationTime) {
                             return;
                         }
+                        this._mouseDown = false;
                         this._listener.call(this._caller, []);
                     };
                     LongClickEventInjector.prototype.onMouseDown = function (e) {
+                        this._mouseDown = true;
                         this._lastMouseDownTime = new Date().getTime();
+                        Laya.timer.clear(this, this.invokeMouseLongClick);
+                        Laya.timer.loop(100, this, this.invokeMouseLongClick);
                     };
                     LongClickEventInjector.prototype.onMouseMove = function (e) { };
                     LongClickEventInjector.prototype.onMouseUp = function (e) {
-                        this.invokeMouseLongClick();
+                        this._mouseDown = false;
                     };
-                    LongClickEventInjector.prototype.onMouseOut = function (e) { };
+                    LongClickEventInjector.prototype.onMouseOut = function (e) {
+                        this._mouseDown = false;
+                    };
                     LongClickEventInjector.prototype.onMouseOver = function (e) { };
                     LongClickEventInjector.prototype.onMouseWheel = function (e) { };
                     LongClickEventInjector.prototype.onRightMouseDown = function (e) { };

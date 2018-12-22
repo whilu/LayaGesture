@@ -41,13 +41,17 @@ module co.lujun.laya.gesture{
 			return LayaGestureManager.sInstance;
 		}
 
-		public onGestureEvent(sprite: Laya.Sprite, gesture: string, caller: any, listener: (p1?: any, p2?: any, p3?: any, p4?: any) => void){
+		private init(gesture: string): void{
 			if(this.mEventInjector[gesture] == undefined || this.mEventInjector[gesture] == null){
 				this.mEventInjector[gesture] = [];
 			}
 			if(this.mSpriteCache[gesture] == undefined || this.mSpriteCache[gesture] == null){
 				this.mSpriteCache[gesture] = [];
 			}
+		}
+
+		public onGestureEvent(sprite: Laya.Sprite, gesture: string, caller: any, listener: (p1?: any, p2?: any, p3?: any, p4?: any) => void){
+			this.init(gesture);
 
 			let eventInjector: EventInjector;
 			switch(gesture){
@@ -86,6 +90,8 @@ module co.lujun.laya.gesture{
 		}
 
 		public offGestureEvent(sprite: Laya.Sprite, gesture: string){
+			this.init(gesture);
+
 			let idx: number = this.mSpriteCache[gesture].indexOf(sprite);
 			if(idx > -1){
 				let eventInjector: EventInjector[] = this.mEventInjector[gesture].splice(idx, 1);
@@ -98,7 +104,11 @@ module co.lujun.laya.gesture{
 		}
 
 		public offAllGestureEvent(sprite: Laya.Sprite): void{
-
+			this.offGestureEvent(sprite, Gesture.DOWN);
+			this.offGestureEvent(sprite, Gesture.DRAG);
+			this.offGestureEvent(sprite, Gesture.LONG_CLICK);
+			this.offGestureEvent(sprite, Gesture.SCALE);
+			this.offGestureEvent(sprite, Gesture.FLING);
 		}
 	}
 }
