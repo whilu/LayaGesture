@@ -20,7 +20,6 @@
  * SOFTWARE.
  */
 
-import WebGL = Laya.WebGL;
 import LayaGestureManager = co.lujun.laya.gesture.LayaGestureManager;
 import Gesture = co.lujun.laya.gesture.Gesture;
 
@@ -37,7 +36,7 @@ class GameMain{
         }else{
             w = h / realRatio;
         }
-        Laya.init(w, h, WebGL);
+        Laya.init(w, h, Laya.WebGL);
         Laya.stage.scaleMode = laya.display.Stage.SCALE_FIXED_AUTO;
 
         Laya.loader.load("res/atlas/comp.atlas", Laya.Handler.create(this, function(){
